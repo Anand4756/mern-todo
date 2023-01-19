@@ -72,7 +72,7 @@ app.post("/register", async (req, res) => {
     await newuser.save()
     return res.json("REGISTRATION SUCCESSFUL")
 
-    console.log(req.body.name)
+    // console.log(req.body.name)
 
     // res.status(400).json('OK! Status Code.' + name)
 })
@@ -129,7 +129,7 @@ const todo = new Todo({
 })
 todo.save(function(err){
   if(err) res.json(err)
-  else console.log("successfully saved");
+  // else console.log("successfully saved");
 })
 
 })
@@ -150,24 +150,51 @@ app.post('/todo/delete', auth.isAuthenticated, async(req, res)=>{
   
 
 });
-app.put('/todo-update', async (req, res)=>{
 
-    const todoid = req.body.todoid;
-    const title = req.body.todotitle;
-    const content = req.body.todocontent;
+app.post('/completed', async (req, res)=>{
+
+    const todoid = req.body.id;
+    console.log(todoid);
+    const data = req.body.ischecked;
+    console.log(data);
     
-    const todo = await Todo.findByIdAndUpdate(todoid, req.body, { new: true, runValidators: true });
+    Todo.findByIdAndUpdate(todoid,{checked: data}, function(err, result){
 
-    if (!todo) {
-      return res.status(404).json({ msg: `No todo with id: ${todoId}` });
-    } else {
-      res.status(200).json({
-        msg: `Todo with id: ${todoId} updated.`,
-        todo: todo,
-      });
-    }
+        if(err){
+            res.send(err)
+        }
+        else{
+            console.log(result)
+            res.send(result)
+
+        }
+
+    })
   
 })
+
+
+
+
+// app.put('/todo-update', async (req, res)=>{
+
+//     const todoid = req.body.todoid;
+//     const title = req.body.todotitle;
+//     const content = req.body.todocontent;
+    
+//     const todo = await Todo.findByIdAndUpdate(todoid, req.body, { new: true, runValidators: true });
+
+//     if (!todo) {
+//       return res.status(404).json({ msg: `No todo with id: ${todoId}` });
+//     } else {
+//       res.status(200).json({
+//         msg: `Todo with id: ${todoId} updated.`,
+//         todo: todo,
+//       });
+//     }
+  
+// })
+
 
 
 const port = 5000;

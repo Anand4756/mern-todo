@@ -29,11 +29,11 @@ const [todo,setTodo] = useState([]);
          
           }
           ).then((response)=>{
-          	console.log(response.data);
+          	// console.log(response.data);
           setTodo(response.data)
             
         }).catch((err)=>{
-           console.log(err);
+           // console.log(err);
         });
     
 	}
@@ -59,7 +59,7 @@ const Submit = (e) =>{
   }).then((response)=>{
           
         }).catch((err)=>{
-           console.log(err);
+           // console.log(err);
         });
          e.target.reset();
         gettodo();
@@ -107,16 +107,17 @@ return (
     </div>    
 
   <div className="card">
-  <table id="customers">
+  <table id="todo-table">
   <tr>
-    
+    <th className="check"></th>
     <th>Title</th>
     <th>Content</th>
-    <th>Delete</th>
+    <th className="delete"></th>
+
   </tr>
   
   {todo.map(todoitems=>{
-     return <Card title={todoitems.title} gettodo={gettodo} todo={todo} setTodo={setTodo} content={todoitems.content} id={todoitems._id}/>
+     return <Card title={todoitems.title} checked={todoitems.checked} gettodo={gettodo} todo={todo} setTodo={setTodo} content={todoitems.content} id={todoitems._id}/>
    })}
 
 </table>
